@@ -11,6 +11,10 @@ class Apache22 < Formula
     :because => "apache22 and apache24 install the same binaries."
 
   def install
+
+    # install custom layout
+    File.open('config.layout', 'w') { |f| f.write(apache_layout) };
+
     args = [
       "--prefix=#{prefix}",
       "--mandir=#{man}",
@@ -21,6 +25,7 @@ class Apache22 < Formula
       "--enable-mods-shared=all",
       "--enable-proxy",
       "--enable-ssl",
+      "--enable-layout=Homebrew"
     ]
     system './configure', *args
     system "make"
